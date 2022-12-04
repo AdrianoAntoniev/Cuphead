@@ -7,18 +7,28 @@
 
 import UIKit
 
+// MARK: - Class
+
 class CupheadView: UIView {
+
+    // MARK: - Lifecycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+
+        setupViews()
+        setupPaths()
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
+        fatalError("Ouch! No Storyboard, dude.")
     }
 
-    private func setup() {
+    private func setupViews() {
+        backgroundColor = .white
+    }
+
+    private func setupPaths() {
         let head = getHeadShape()
         let ear = getEarShape()
         let rightEye = getRightEyeShape()
@@ -27,17 +37,22 @@ class CupheadView: UIView {
         let mouth = getMouthShape()
         let tongue = getTongueShape()
         let drinkingTube = getDrinkingTubeShape()
-        self.layer.addSublayer(head)
-        self.layer.addSublayer(leftEye)
-        self.layer.addSublayer(rightEye)
-        self.layer.addSublayer(ear)
-        self.layer.addSublayer(nose)
-        self.layer.addSublayer(mouth)
-        self.layer.addSublayer(drinkingTube)
+
+        layer.addSublayer(head)
+        layer.addSublayer(leftEye)
+        layer.addSublayer(rightEye)
+        layer.addSublayer(ear)
+        layer.addSublayer(nose)
+        layer.addSublayer(mouth)
+        layer.addSublayer(drinkingTube)
         mouth.addSublayer(tongue)
     }
+}
 
-    private func getHeadShape() -> CAShapeLayer {
+// MARK: - Extension Methods
+
+private extension CupheadView {
+    func getHeadShape() -> CAShapeLayer {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 84, y: 196))
         path.addQuadCurve(to: CGPoint(x: 366, y: 100), controlPoint: CGPoint(x: 205, y: 100))
@@ -48,12 +63,12 @@ class CupheadView: UIView {
         let headShape = CAShapeLayer()
         headShape.path = path.cgPath
         headShape.lineWidth = 5
-        headShape.strokeColor = UIColor.black.cgColor
-        headShape.fillColor =  UIColor.clear.cgColor
+        headShape.strokeColor = .black
+        headShape.fillColor =  .clear
         return headShape
     }
 
-    private func getRightEyeShape() -> CAShapeLayer {
+    func getRightEyeShape() -> CAShapeLayer {
         let rightEyeWrapPath = UIBezierPath()
         rightEyeWrapPath.move(to: CGPoint(x: 392, y: 165))
         rightEyeWrapPath.addCurve(to: CGPoint(x: 317, y: 175),
@@ -72,18 +87,18 @@ class CupheadView: UIView {
         let rightEyeWrapShape = CAShapeLayer()
         rightEyeWrapShape.path = rightEyeWrapPath.cgPath
         rightEyeWrapShape.lineWidth = 5
-        rightEyeWrapShape.strokeColor = UIColor.black.cgColor
-        rightEyeWrapShape.fillColor =  UIColor.clear.cgColor
+        rightEyeWrapShape.strokeColor = .black
+        rightEyeWrapShape.fillColor =  .clear
         let eyeShape = CAShapeLayer()
         eyeShape.path = eyePath.cgPath
-        eyeShape.strokeColor = UIColor.black.cgColor
+        eyeShape.strokeColor = .black
         eyeShape.lineWidth = 1
-        eyeShape.fillColor = UIColor.black.cgColor
+        eyeShape.fillColor = .black
         rightEyeWrapShape.addSublayer(eyeShape)
         return rightEyeWrapShape
     }
 
-    private func getLeftEyeShape() -> CAShapeLayer {
+    func getLeftEyeShape() -> CAShapeLayer {
         let leftEyeWrapPath = UIBezierPath()
         leftEyeWrapPath.move(to: CGPoint(x: 135, y: 162))
         leftEyeWrapPath.addCurve(to: CGPoint(x: 300, y: 105),
@@ -102,28 +117,28 @@ class CupheadView: UIView {
         let leftEyeWrapShape = CAShapeLayer()
         leftEyeWrapShape.path = leftEyeWrapPath.cgPath
         leftEyeWrapShape.lineWidth = 5
-        leftEyeWrapShape.strokeColor = UIColor.black.cgColor
-        leftEyeWrapShape.fillColor =  UIColor.clear.cgColor
+        leftEyeWrapShape.strokeColor = .black
+        leftEyeWrapShape.fillColor =  .clear
         let eyeShape = CAShapeLayer()
         eyeShape.path = eyePath.cgPath
         eyeShape.lineWidth = 1
-        eyeShape.strokeColor = UIColor.black.cgColor
-        eyeShape.fillColor = UIColor.black.withAlphaComponent(1).cgColor
+        eyeShape.strokeColor = .black
+        eyeShape.fillColor = .blackWithAlphaOne
         leftEyeWrapShape.addSublayer(eyeShape)
         return leftEyeWrapShape
     }
 
-    private func getNoseShape() -> CAShapeLayer {
+    func getNoseShape() -> CAShapeLayer {
         let nosePath = UIBezierPath(ovalIn: CGRect(x: 310, y: 180, width: 52, height: 30))
         let noseShape = CAShapeLayer()
         noseShape.path = nosePath.cgPath
-        noseShape.strokeColor = UIColor.black.cgColor
+        noseShape.strokeColor = .black
         noseShape.lineWidth = 4
-        noseShape.fillColor = UIColor(named: "orangeColor")?.cgColor
+        noseShape.fillColor = .orange
         return noseShape
     }
 
-    private func getEarShape() -> CAShapeLayer {
+    func getEarShape() -> CAShapeLayer {
         let path = UIBezierPath(arcCenter: CGPoint(x: 100, y: 260),
                                 radius: 55.0,
                                 startAngle: 1.4 * CGFloat.pi,
@@ -137,20 +152,20 @@ class CupheadView: UIView {
         let earShape = CAShapeLayer()
         earShape.path = path.cgPath
         earShape.lineWidth = 5
-        earShape.strokeColor = UIColor.black.cgColor
-        earShape.fillColor =  UIColor.clear.cgColor
+        earShape.strokeColor = .black
+        earShape.fillColor =  .clear
         let fullEar = CAShapeLayer()
         fullEar.addSublayer(earShape)
         let innerEar = CAShapeLayer()
         innerEar.path = path2.cgPath
         innerEar.lineWidth = 5
-        innerEar.strokeColor = UIColor.black.cgColor
-        innerEar.fillColor =  UIColor.clear.cgColor
+        innerEar.strokeColor = .black
+        innerEar.fillColor =  .clear
         fullEar.addSublayer(innerEar)
         return fullEar
     }
 
-    private func getMouthShape() -> CAShapeLayer {
+    func getMouthShape() -> CAShapeLayer {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 310, y: 250))
         path.addCurve(to: CGPoint(x: 175, y: 250),
@@ -162,12 +177,12 @@ class CupheadView: UIView {
         let mouthShape = CAShapeLayer()
         mouthShape.path = path.cgPath
         mouthShape.lineWidth = 3
-        mouthShape.strokeColor = UIColor.black.cgColor
-        mouthShape.fillColor =  UIColor.black.cgColor
+        mouthShape.strokeColor = .black
+        mouthShape.fillColor =  .black
         return mouthShape
     }
 
-    private func getTongueShape() -> CAShapeLayer {
+    func getTongueShape() -> CAShapeLayer {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 175, y: 290))
         path.addCurve(to: CGPoint(x: 230, y: 285),
@@ -181,13 +196,12 @@ class CupheadView: UIView {
         let tongueShape = CAShapeLayer()
         tongueShape.path = path.cgPath
         tongueShape.lineWidth = 2
-        tongueShape.strokeColor = UIColor.black.cgColor
-        tongueShape.fillColor = UIColor(named: "orangeColor")?.cgColor
+        tongueShape.strokeColor = .black
+        tongueShape.fillColor = .orange
         return tongueShape
     }
 
-    private func getDrinkingTubeShape() -> CAShapeLayer {
-
+    func getDrinkingTubeShape() -> CAShapeLayer {
         //Wraper Shape
         let wrapPath = UIBezierPath()
         wrapPath.move(to: CGPoint(x: 170, y: 145))
@@ -201,8 +215,8 @@ class CupheadView: UIView {
         let tubeWrapShape = CAShapeLayer()
         tubeWrapShape.path = wrapPath.cgPath
         tubeWrapShape.lineWidth = 5
-        tubeWrapShape.strokeColor = UIColor.black.cgColor
-        tubeWrapShape.fillColor = UIColor.clear.cgColor
+        tubeWrapShape.strokeColor = .black
+        tubeWrapShape.fillColor = .clear
 
         //Red Line 1
         let redLinePath1 = UIBezierPath()
@@ -216,8 +230,8 @@ class CupheadView: UIView {
         let redLineShape1 = CAShapeLayer()
         redLineShape1.path = redLinePath1.cgPath
         redLineShape1.lineWidth = 3
-        redLineShape1.strokeColor = UIColor.black.cgColor
-        redLineShape1.fillColor = UIColor(named: "orangeColor")?.cgColor
+        redLineShape1.strokeColor = .black
+        redLineShape1.fillColor = .orange
         tubeWrapShape.addSublayer(redLineShape1)
 
         //Red Line 2
@@ -230,8 +244,8 @@ class CupheadView: UIView {
         let redLineShape2 = CAShapeLayer()
         redLineShape2.path = redLinePath2.cgPath
         redLineShape2.lineWidth = 3
-        redLineShape2.strokeColor = UIColor.black.cgColor
-        redLineShape2.fillColor = UIColor(named: "orangeColor")?.cgColor
+        redLineShape2.strokeColor = .black
+        redLineShape2.fillColor = .orange
         tubeWrapShape.addSublayer(redLineShape2)
 
         //Middle Line Shape
@@ -242,10 +256,9 @@ class CupheadView: UIView {
         let middleLineShape = CAShapeLayer()
         middleLineShape.path = middleLinePath.cgPath
         middleLineShape.lineWidth = 3
-        middleLineShape.strokeColor = UIColor.black.cgColor
-        middleLineShape.fillColor = UIColor.clear.cgColor
+        middleLineShape.strokeColor = .black
+        middleLineShape.fillColor = .clear
         tubeWrapShape.addSublayer(middleLineShape)
         return tubeWrapShape
     }
-
 }
